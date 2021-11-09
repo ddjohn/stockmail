@@ -4,8 +4,9 @@ const dateFns = require('date-fns')
 const yahoo = require ('yahoo-finance');
 
 const now = new Date();
+now.setDate(now.getDate() + 1);
 const to = dateFns.format(now, "yyyy-MM-dd")
-now.setDate(now.getDate() - 30);
+now.setDate(now.getDate() - 31);
 const from = dateFns.format(now, "yyyy-MM-dd")
 
 function averageFkn(quotes) {
@@ -54,11 +55,11 @@ function rsi(quotes) {
     quotes.forEach(quote => {
         let price = parseFloat(quote.close)
 
-        if(price > old) {
+        if(price < old) {
             up++;
         }
 
-        if(price < old) {
+        if(price > old) {
             down++;
         }
 
@@ -114,7 +115,7 @@ function web_column_stochastic(value) {
 }
 
 function web_column_volume(value) {
-    if(value > 50) {
+    if(value > 10) {
         console.log("<td class='green'>" + parseFloat(value).toFixed(2) + "</td>")
         return
     }
